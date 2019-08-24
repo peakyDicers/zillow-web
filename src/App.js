@@ -7,6 +7,7 @@ import Vision from './Vision';
 function App() {
   return (
     <div className="App">
+      
       <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin />
 
       <script
@@ -27,8 +28,8 @@ function App() {
       />
 
       <script>var Alert = ReactBootstrap.Alert;</script>
+      <Zillow />
       <header className="App-header">
-        <Zillow />
         <Vision />
       </header>
     </div>
