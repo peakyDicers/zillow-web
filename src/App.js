@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Zillow from './Zillow';
 import Vision from './Vision';
+import Gmap from './GMap'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <header className="App-header">
         <Zillow />
         <Vision />
+        <Gmap />
       </header>
     </div>
   );
