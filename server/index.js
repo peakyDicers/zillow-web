@@ -8,20 +8,20 @@ var parseString = require('xml2js').parseString;
 const port = 3000
 let key = 'X1-ZWz1hb9u92p3pn_a80zd'
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", '*'); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
 app.get('/getZillow', (req, res) => {
-  let addr =  req.query.addr;
+  let addr = req.query.addr;
   let cityStateZip = req.query.cityStateZip;
   // let testAddr = '2114+Bigelow+Ave';
   // let testCitystatezip = 'Seattle%2C+WA'
   let testAddr = '14500+Sylena+Way';
   let testCitystatezip = 'OklahomaCity%2C+OK'
-  
+
   axios(`http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=${key}&address=${addr}&citystatezip=${cityStateZip}`, {
     method: 'GET',
     mode: 'no-cors',

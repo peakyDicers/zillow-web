@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 export default class Vision extends React.Component {
     constructor(props) {
@@ -14,8 +15,8 @@ export default class Vision extends React.Component {
         console.log(this.state)
         return (
             <div>
-                <button onClick={this.getPy}>Disp image</button>
-                <div dangerouslySetInnerHTML={{__html: this.state.image}}></div>
+                <Button onClick={this.getPy}>Disp image</Button>
+                <div dangerouslySetInnerHTML={{ __html: this.state.image }}></div>
             </div>
         )
     }
@@ -27,7 +28,7 @@ export default class Vision extends React.Component {
             .then((response) => {
                 // handle success
                 console.log(response);
-                this.setState({image: response.data})
+                this.setState({ image: response.data })
                 console.log("successful");
             })
             .catch(function (error) {
