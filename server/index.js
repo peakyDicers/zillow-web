@@ -43,4 +43,14 @@ app.get('/getZillow', (req, res) => {
   })
 });
 
+app.get('/getPy', (req, res) => {
+  console.log("SErver work")
+  let exec = require('child_process').exec;
+  exec("python3 py/test.py", function callback(error, stdout, stderr) {
+    console.log("Something happened");
+    console.log(stdout);
+    res.send(stdout);
+  })
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
