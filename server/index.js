@@ -22,7 +22,7 @@ app.get('/getZillow', (req, res) => {
   let testAddr = '14500+Sylena+Way';
   let testCitystatezip = 'OklahomaCity%2C+OK'
   
-  axios(`http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=${key}&address=${testAddr}&citystatezip=${testCitystatezip}`, {
+  axios(`http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=${key}&address=${addr}&citystatezip=${cityStateZip}`, {
     method: 'GET',
     mode: 'no-cors',
     headers: {
@@ -32,12 +32,13 @@ app.get('/getZillow', (req, res) => {
     withCredentials: true,
     credentials: 'same-origin',
   }).then(data => {
-    //print xml.
-    //console.log(data.data)
+    console.log(data.data)
     let xml = data.data;
     parseString(xml, function (err, result) {
+      console.log('------------------------')
+      console.log(JSON.stringify(result))
+      console.log('------------------------')
       let money = result["SearchResults:searchresults"].response[0].results[0].result[0].zestimate[0].amount[0]._;
-      console.log(money);
       res.send(money);
     });
   })
