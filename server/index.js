@@ -1,6 +1,7 @@
 const express = require('express')
 const axios = require('axios')
 const app = express()
+const path = require('path');
 
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser')
@@ -148,6 +149,12 @@ app.get('/getZillow', (req, res) => {
     let money = result["SearchResults:searchresults"].response[0].results[0].result[0].zestimate[0].amount[0]._;
     res.send(money);
   });
+})
+
+app.get('/getImage', (req, res) => {
+  // res.sendFile('/py/mask-rcnn/program/cat3damage/output.png');
+  res.sendFile(path.join(__dirname, 'py/mask-rcnn/program/cat3damage/output.png'));
+
 })
 
 async function xml2json(xml) {
