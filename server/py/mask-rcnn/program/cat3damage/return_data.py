@@ -70,9 +70,5 @@ def ret_me2(wut: str):
 
 	bbox = utils.extract_bboxes(mask)
 	bbox_dict = utils.extract_bboxes_info(wut, mask)
-	im = visualize.display_instances(image, bbox, mask, class_ids, dataset.class_names)
-	return  { 
-		"houses" :bbox_dict,
-		"marked_image": im
-		# Image.new('RGBA', (200, 100),  color='red')
-	}
+	visualize.display_instances(image, bbox, mask, class_ids, dataset.class_names)
+	return  bbox_dict,
