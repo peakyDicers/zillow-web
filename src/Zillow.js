@@ -138,7 +138,7 @@ export default class Zillow extends React.Component {
             <Card>
 
               <Card.Body>
-                <Card.Title>Estimate Cost of Affected Area</Card.Title>
+                <Card.Title>Estimate Damage Cost of Affected Area</Card.Title>
                 <Card.Text>
                    Choose an event from the dropdown below and import an image to get your estimate.
                 </Card.Text>
