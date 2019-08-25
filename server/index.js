@@ -32,11 +32,12 @@ app.get('/getPy', (req, res) => {
 app.post('/getMorePyData', (req, res) => {
   var isWin = process.platform === "win32";
   let py = isWin ? 'python' : 'python3';
-  console.log("hello", req.body);
+  
   let damn_data = req.body.data;
 
   let exec = require('child_process').exec;
   exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_more_data.py '${damn_data}'`, function callback(error, stdout, stderr) {
+    console.log('HOLY', stdout)
     res.send(stdout);
   })
 });
@@ -57,6 +58,7 @@ app.post('/getImgData', (req, res) => {
 
 app.post('/getTotalDamage', async (req, res) => {
   
+
   let houses = req.body.data; //array of house objects.
   
   let totalCost = 0;

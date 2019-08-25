@@ -147,7 +147,8 @@ export default class Zillow extends React.Component {
   }
 
   imgSelected = (e) => {
-    this.setState({ file: URL.createObjectURL(e.target.files[0]) });
+    console.log('THIS FILE IS ', e.target.files[0].name)
+    this.setState({ file: e.target.files[0].name });
   }
 
   renderLoading = () => {
