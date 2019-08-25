@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
+import Image from 'react-bootstrap/Image';
 
 export default class Zillow extends React.Component {
   constructor(props) {
@@ -32,20 +34,22 @@ export default class Zillow extends React.Component {
       })
   }
 
-  getTotalDamage = () => {
+  getTotalDamage = async () => {
     const axios = require('axios');
-    
+    let houses = await axios.get('http://localhost:3000/getPy')
+
     axios.post(`http://localhost:3000/getTotalDamage`, {
-      data:[
-        {
-          addr: '2114+Bigelow+Ave',
-          cityStateZip:'Seattle%2C+WA'
-        },
-        {
-          addr: '2114+Bigelow+Ave',
-          cityStateZip:'Seattle%2C+WA'
-        }
-      ]
+      data: houses
+      // data:[
+      //   {
+      //     addr: '2114+Bigelow+Ave',
+      //     cityStateZip:'Seattle%2C+WA'
+      //   },
+      //   {
+      //     addr: '2114+Bigelow+Ave',
+      //     cityStateZip:'Seattle%2C+WA'
+      //   }
+      // ]
     })
       .then((response) => {
         console.log(response);
@@ -64,21 +68,57 @@ export default class Zillow extends React.Component {
     this.setState({ cityStateZip: event.target.value })
   })
 
+  uploadCompleted = () => {
+    this.setState({ loading: false })
+  }
+
+  runApp = () => {
+    this.setState({ loading: true })
+    setTimeout(this.uploadCompleted, 3000, 'funky');
+  }
+
+  imgSelected = (e) => {
+
+    this.setState({ file: URL.createObjectURL(e.target.files[0]) });
+  }
+
+  renderLoading = () => {
+    if (this.state.loading)
+      return <Spinner animation="border" />
+    else
+      return <div />
+  }
+
   render() {
     return (
-      <Container className='mt-5'>
+      <Container className='mt-3'>
+        <Row className={"mb-3"}>
+          <h1 style={{ marginTop: 15, marginLeft: 18 }}>Assure AI</h1>
+        </Row>
         <Row>
           <Col>
-            <Container>
-              <h1 style={{ marginTop: 15 }}>INTACT INSURANCE</h1>
-              <DropdownComp />
-            </Container>
+            <Card>
+              
+              <Card.Body>
+                <Card.Title>Estimate Cost of Large Affected Area</Card.Title>
+                <Card.Text>
+                  Estimate the cost of catestrophic damage affecting a large area.
+                </Card.Text>
+                <Card.Img variant="top" src={this.state.file} />
+                <input type='file' onChange={(e) => this.imgSelected(e)} />
+                <div className={"mt-2"}>
+                  <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
+                  <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
+                </div>
+                {this.renderLoading()}
+              </Card.Body>
+            </Card>
           </Col>
           <Col>
             <Card>
               <Card.Body>
                 <Card.Title>
-                  Find cost of a property
+                  Estimate cost of single property.
               </Card.Title>
                 <Form>
                   <Form.Group controlId="exampleForm.ControlInput1">
@@ -90,7 +130,7 @@ export default class Zillow extends React.Component {
                     <Form.Control onChange={this.cityStateZipChange.bind(this)} placeholder="Springfield 0293A" />
                   </Form.Group>
                 </Form>
-                <Container>
+                <div>
                   <Row>
                     <Col>
                       <Button onClick={this.getData}>Get Estimate</Button>
@@ -99,10 +139,9 @@ export default class Zillow extends React.Component {
                       <h2>{`$ ${this.state.money} USD`}</h2>
                     </Col>
                   </Row>
-                </Container>
+                </div>
               </Card.Body>
             </Card>
-            <Button onClick={this.getTotalDamage}>Get Total Damages Cost</Button>
           </Col>
         </Row>
       </Container>
