@@ -30,8 +30,8 @@ function App() {
 
       <script>var Alert = ReactBootstrap.Alert;</script>
       <Zillow />
-        <Vision />
-        <Gmap />
+      <Vision />
+
     </div>
   );
 }

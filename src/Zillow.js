@@ -9,6 +9,31 @@ import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown'
+import Gmap from './GMap'
+
+// MOCK DATA 
+
+// let houses = [ { lat: 35.32368381834795,
+//   lng: -97.52049913048246,
+//   addr: '14509 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32371635343567,
+//   lng: -97.52034241995615,
+//   addr: '14508 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32318630263158,
+//   lng: -97.52062101644738,
+//   addr: '14605 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32370821966374,
+//   lng: -97.52004205811404,
+//   addr: '14508 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32319308077486,
+//   lng: -97.52017917982457,
+//   addr: '14604 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' }
+// ];
 
 export default class Zillow extends React.Component {
   constructor(props) {
@@ -18,7 +43,9 @@ export default class Zillow extends React.Component {
       cityStateZip: '',
       money: 0,
       largeScaleMoney: 0,
-      currency: 'USD'
+      homesAffected: 0,
+      currency: 'USD',
+      locations: []
     }
   }
 
@@ -28,7 +55,7 @@ export default class Zillow extends React.Component {
       .then((response) => {
         // handle success
         console.log(response);
-        this.setState({ money: response.data })
+        this.setState({ money: response.data });
       })
       .catch(function (error) {
         // handle error
@@ -37,11 +64,14 @@ export default class Zillow extends React.Component {
   }
 
   getTotalDamage = async () => {
+    this.setState({ loading: true })
     const axios = require('axios');
     let response = await axios.get('http://localhost:3000/getPyData')
 
     let houses = response.data;
     houses = this.prepareHouses(houses);
+
+    this.setState({ locations: houses, homesAffected: houses.length > 0 ? houses.length - 1 : 0 });
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data: houses
     })
@@ -51,6 +81,9 @@ export default class Zillow extends React.Component {
       .catch(function (error) {
         console.log(error);
       })
+      .finally(() => {
+        this.setState({ loading: false })
+      });
   }
 
   prepareHouses = (data) => {
@@ -80,15 +113,6 @@ export default class Zillow extends React.Component {
   cityStateZipChange = (event => {
     this.setState({ cityStateZip: event.target.value })
   })
-
-  uploadCompleted = () => {
-    this.setState({ loading: false })
-  }
-
-  runApp = () => {
-    this.setState({ loading: true })
-    setTimeout(this.uploadCompleted, 3000, 'funky');
-  }
 
   imgSelected = (e) => {
 
@@ -136,7 +160,7 @@ export default class Zillow extends React.Component {
         </Row>
         <Row>
           <Col>
-            <Card>
+            <Card style={{ height: 325 }}>
 
               <Card.Body>
                 <Card.Title>Estimate Damage Cost of Affected Area</Card.Title>
@@ -148,16 +172,11 @@ export default class Zillow extends React.Component {
                 <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
                 <div className={"mt-2"}>
                   <Row style={{ marginLeft: 0 }}>
-                    <Col className="centered">
-                      <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
-                    </Col>
-                    <Col className="centered">
-                      <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
-
-                    </Col>
-                    <Col className="text-right">
-                      <Button className="disabled btn-light">{`$ ${this.state.largeScaleMoney} USD`}</Button>
-                    </Col>
+                    <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
+                    <h3 style={{ position: 'absolute', right: 13 }}>{`$ ${this.state.largeScaleMoney} USD`}</h3>
+                  </Row>
+                  <Row>
+                    <h3 style={{ position: 'absolute', right: 13 }}>{`${this.state.homesAffected} homes affected`}</h3>
                   </Row>
                 </div>
                 {this.renderLoading()}
@@ -165,7 +184,7 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
           <Col>
-            <Card>
+            <Card style={{ height: 325 }}>
               <Card.Body>
                 <Card.Title>
                   Estimate cost of single property.
@@ -194,6 +213,7 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
       </Container>
     )
   }
