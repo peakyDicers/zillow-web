@@ -43,7 +43,7 @@ export default class Zillow extends React.Component {
       cityStateZip: '',
       money: 0,
       largeScaleMoney: 0,
-      homesAffected: 40,
+      homesAffected: 0,
       currency: 'USD',
       locations: [],
       file: '',
