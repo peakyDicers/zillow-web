@@ -46,7 +46,7 @@ export default class Zillow extends React.Component {
       homesAffected: 0,
       currency: 'USD',
       locations: [],
-      file:'',
+      file: '',
     }
   }
 
@@ -156,7 +156,7 @@ export default class Zillow extends React.Component {
           <img height="60px" src="./media/logo-aai.png"></img>
           <h1 className="ml-3">Assure AI</h1>
         </Row>
-        <Row className="m-3"> 
+        <Row className="m-3">
           <h5>Large-scale insurance assurance!</h5>
         </Row>
         <Row>
@@ -175,9 +175,6 @@ export default class Zillow extends React.Component {
                   <Row style={{ marginLeft: 0 }}>
                     <Button onClick={this.getTotalDamage}>Estimate Total Damage Cost</Button>
                     <h3 style={{ position: 'absolute', right: 13 }}>{`$ ${this.state.largeScaleMoney} USD`}</h3>
-                  </Row>
-                  <Row>
-                    <h3 style={{ position: 'absolute', right: 13 }}>{`${this.state.homesAffected} homes affected`}</h3>
                   </Row>
                 </div>
                 {this.renderLoading()}
@@ -214,8 +211,26 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Image src={this.state.file} style={{width:450}}/>
-        <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
+        <Row style={{ marginTop: 30 }}>
+          <Col>
+
+          </Col>
+          <Col>
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Affected Homes
+              </Card.Title>
+                
+                  <h6>{`${this.state.homesAffected} destroyed`}</h6>
+                  <h6>{`0 partially destroyed`}</h6>
+                
+                <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Image src={this.state.file} style={{ width: 450 }} />
       </Container>
     )
   }
