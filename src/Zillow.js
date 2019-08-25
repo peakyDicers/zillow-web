@@ -69,10 +69,14 @@ export default class Zillow extends React.Component {
     const axios = require('axios');
     let response = await axios.post('http://localhost:3000/getMorePyData', {data: this.state.file})
 
-    console.log('wtf', response.data)
+    
+    // response = JSON.parse(response.data);
+
     let houses = response.data.houses;
-    let image = response.data.marked_image;
+    // let image = response.marked_image;
+    console.log(houses);
     houses = this.prepareHouses(houses);
+
 
     this.setState({ locations: houses, homesAffected: houses.length});
     axios.post(`http://localhost:3000/getTotalDamage`, {
@@ -147,7 +151,7 @@ export default class Zillow extends React.Component {
   }
 
   imgSelected = (e) => {
-    console.log('THIS FILE IS ', e.target.files[0].name)
+    
     this.setState({ file: e.target.files[0].name });
   }
 
@@ -238,17 +242,7 @@ export default class Zillow extends React.Component {
         </Row>
         <Row style={{ marginTop: 30 }}>
           <Col>
-            <Card>
-              <Card.Body>
-                <Card.Title>
-                  ML Mapping
-              </Card.Title>
-                <Image src={this.state.file} style={{ width: 450 }} />
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card>
+          <Card>
               <Card.Body>
                 <Card.Title>
                   Affected Homes
@@ -256,10 +250,23 @@ export default class Zillow extends React.Component {
 
                 <h6>{`${this.state.homesAffected} destroyed`}</h6>
                 <h6>{`0 partially destroyed`}</h6>
+                <h6>{`0 intact`}</h6>
 
                 <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
               </Card.Body>
             </Card>
+          </Col>
+          <Col>
+
+          <Card>
+              <Card.Body>
+                <Card.Title>
+                  ML Mapping
+              </Card.Title>
+                <Image src={'http://localhost:3000/server/py/mask-rcnn/program/cat3damage/output.png'} style={{ width: 450 }} />
+              </Card.Body>
+            </Card>
+            
           </Col>
         </Row>
       </Container>
