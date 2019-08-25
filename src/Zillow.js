@@ -30,9 +30,37 @@ export default class Zillow extends React.Component {
         // handle error
         console.log(error);
       })
-      .finally(function () {
-        // always executed
-      });
+  }
+
+  getTotalDamage = () => {
+    const axios = require('axios');
+    // axios({
+    //   method: 'post',
+    //   url: 'http://localhost:3000/getTotalDamage',
+    //   data: {
+    //     firstName: 'Fred',
+    //     lastName: 'Flintstone'
+    //   }
+    // });
+    axios.post(`http://localhost:3000/getTotalDamage`, {
+      data:[
+        {
+          addr: '2114+Bigelow+Ave',
+          cityStateZip:'Seattle%2C+WA'
+        },
+        {
+          addr: '2114+Bigelow+Ave',
+          cityStateZip:'Seattle%2C+WA'
+        }
+      ]
+    })
+      .then((response) => {
+        console.log(response);
+        this.setState({ money: response.data })
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   addrChange = (event) => {
@@ -44,7 +72,6 @@ export default class Zillow extends React.Component {
   })
 
   render() {
-    console.log(this.state)
     return (
       <Container className='mt-5'>
         <Row>
