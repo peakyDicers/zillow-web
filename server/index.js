@@ -29,7 +29,7 @@ app.get('/getPyData', (req, res) => {
 
   console.log("SErver work")
   let exec = require('child_process').exec;
-  exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} return_data.py`, function callback(error, stdout, stderr) {
+  exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_data.py`, function callback(error, stdout, stderr) {
     console.log("Something happened");
     console.log(stdout);
     console.log(stderr);
