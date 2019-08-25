@@ -70,9 +70,13 @@ export default class Zillow extends React.Component {
     let response = await axios.post('http://localhost:3000/getMorePyData', {data: this.state.file})
 
     
-    let houses = response.data
-    let image = response.data.marked_image;
+    // response = JSON.parse(response.data);
+
+    let houses = response.data.houses;
+    // let image = response.marked_image;
+    console.log(houses);
     houses = this.prepareHouses(houses);
+
 
     this.setState({ locations: houses, homesAffected: houses.length});
     axios.post(`http://localhost:3000/getTotalDamage`, {
@@ -243,7 +247,7 @@ export default class Zillow extends React.Component {
                 <Card.Title>
                   ML Mapping
               </Card.Title>
-                <Image src={this.state.file} style={{ width: 450 }} />
+                <Image src={'http://localhost:3000/server/py/mask-rcnn/program/cat3damage/output.png'} style={{ width: 450 }} />
               </Card.Body>
             </Card>
           </Col>

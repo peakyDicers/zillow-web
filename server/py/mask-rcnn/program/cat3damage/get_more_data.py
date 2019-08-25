@@ -22,11 +22,9 @@ class DummyFile(object):
 from return_data import *
 
 dictr = ret_me2(sys.argv[1])
-print("Wut")
 
 result = {
-    "houses": dictr,
-    "marked_image": imgData(Image.open("output.png")) if len(sys.argv) > 0 else None
+    "houses": dictr
 }
 
 # sys.stdout = save_stdout
