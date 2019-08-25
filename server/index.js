@@ -22,6 +22,21 @@ app.get('/getPy', (req, res) => {
   })
 });
 
+
+app.get('/getPyData', (req, res) => {
+  var isWin = process.platform === "win32";
+  let py = isWin ? 'python' : 'python3';
+
+  console.log("SErver work")
+  let exec = require('child_process').exec;
+  exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} return_data.py`, function callback(error, stdout, stderr) {
+    console.log("Something happened");
+    console.log(stdout);
+    console.log(stderr);
+    res.send(stdout);
+  })
+});
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", '*'); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
