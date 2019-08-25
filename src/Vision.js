@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 export default class Vision extends React.Component {
     constructor(props) {
@@ -14,10 +15,10 @@ export default class Vision extends React.Component {
     render() {
         console.log(this.state)
         return (
-            <div>
+            <Container>
                 <Button onClick={this.getPy}>Disp image</Button>
                 <div dangerouslySetInnerHTML={{ __html: this.state.image }}></div>
-            </div>
+            </Container>
         )
     }
 
