@@ -45,7 +45,8 @@ export default class Zillow extends React.Component {
       largeScaleMoney: 0,
       homesAffected: 0,
       currency: 'USD',
-      locations: []
+      locations: [],
+      file:'',
     }
   }
 
@@ -198,7 +199,7 @@ export default class Zillow extends React.Component {
                 </Card.Text>
                 {this.renderDropdown()}
                 <Card.Img variant="top" src={this.state.file} />
-                <input type='file' className="mb-2" onChange={(e) => this.imgSelected(e)} />
+                <input type='file' className="mb-2 mt-2" onChange={(e) => this.imgSelected(e)} />
                 <Container>
                   <Row>
                     <Button className="centered" onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
@@ -242,6 +243,7 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Image src={this.state.file} style={{width:450}}/>
         <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
       </Container>
     )
