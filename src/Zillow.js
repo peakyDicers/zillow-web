@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Image from 'react-bootstrap/Image';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 export default class Zillow extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Zillow extends React.Component {
       addr: '',
       cityStateZip: '',
       money: 0,
+      largeScaleMoney: 0,
       currency: 'USD'
     }
   }
@@ -53,7 +55,7 @@ export default class Zillow extends React.Component {
     })
       .then((response) => {
         console.log(response);
-        this.setState({ money: response.data })
+        this.setState({ largeScaleMoney: response.data })
       })
       .catch(function (error) {
         console.log(error);
@@ -89,26 +91,50 @@ export default class Zillow extends React.Component {
       return <div />
   }
 
+  renderDropdown = () => {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Natural Disasters
+  </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item href="#/action-1">Tornados</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Hurricanes</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Floods</Dropdown.Item>
+          <Dropdown.Item href="#/action-1">Wildfires</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Earthquakes</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Drought</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    )
+  }
+
   render() {
     return (
       <Container className='mt-3'>
-        <Row className={"mb-3"}>
+        <Row>
           <h1 style={{ marginTop: 15, marginLeft: 18 }}>Assure AI</h1>
+        </Row>
+        <Row style={{ marginBottom: 5 }}>
+          <h5 style={{ marginTop: -5, marginLeft: 18 }}>Large-scale insurrance assurance.</h5>
         </Row>
         <Row>
           <Col>
             <Card>
-              
+
               <Card.Body>
                 <Card.Title>Estimate Cost of Large Affected Area</Card.Title>
                 <Card.Text>
                   Estimate the cost of catestrophic damage affecting a large area.
                 </Card.Text>
+                {this.renderDropdown()}
                 <Card.Img variant="top" src={this.state.file} />
                 <input type='file' onChange={(e) => this.imgSelected(e)} />
                 <div className={"mt-2"}>
                   <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
                   <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
+                  <h2>{`$ ${this.state.largeScaleMoney} USD`}</h2>
                 </div>
                 {this.renderLoading()}
               </Card.Body>

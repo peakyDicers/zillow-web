@@ -16,8 +16,8 @@ class Location {
 
 export default class GMap extends React.Component {
     static defaultProps = {
-        center: { lat: 59.744465, lng: 30.042834 },
-        zoom: 10,
+        center: { lat: 43.6596, lng: -79.3977 },
+        zoom: 15,
         visibleRowFirst: -1,
         visibleRowLast: -1,
         hoveredRowIndex: -1
@@ -73,6 +73,7 @@ export default class GMap extends React.Component {
                 <GoogleMapReact
                     defaultCenter={this.props.center}
                     defaultZoom={this.props.zoom}
+                    bootstrapURLKeys={{key: "AIzaSyC8J4GIYVFZ4uKtsgXcOfAEZtHMSy-TdEc"}}
                 >
                 {this.renderMarkers()}
                 </GoogleMapReact>
