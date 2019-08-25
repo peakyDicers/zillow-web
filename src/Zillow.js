@@ -95,16 +95,14 @@ export default class Zillow extends React.Component {
     return (
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Natural Disasters
+          Current Events
   </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Tornados</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Hurricanes</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Floods</Dropdown.Item>
-          <Dropdown.Item href="#/action-1">Wildfires</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Earthquakes</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Drought</Dropdown.Item>
+          <Dropdown.Item href="#/action-1">2018 Albion Montana Tornado</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">2017 Hurricane Harvey</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">2013 Moore Tornado</Dropdown.Item>
+          <Dropdown.Item href="#/action-4">2012 Hurricane Sandy</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
