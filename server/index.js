@@ -30,7 +30,7 @@ app.post('/getTotalDamage', async (req, res) => {
   houseVals = await Promise.all(houseVals);
 
   houseVals.forEach(houseVal => {
-    
+
     if (houseVal === -1)
       return;
 
@@ -41,7 +41,7 @@ app.post('/getTotalDamage', async (req, res) => {
   //calculate avg cost of a house, and use these vals for houses we couldn't query.
   let avgHouseCost = totalCost / housesCounted;
   totalCost += avgHouseCost * (houses.length - housesCounted)
-  
+
   res.send(totalCost.toString());
 });
 
@@ -66,7 +66,7 @@ let getHouseValue = async (addr, cityStateZip) => {
   if (isFail !== "0") return -1;
 
   let money = result["SearchResults:searchresults"].response[0].results[0].result[0].zestimate[0].amount[0]._;
-  
+
   return parseInt(money);
 }
 
@@ -91,17 +91,9 @@ app.get('/getZillow', (req, res) => {
     credentials: 'same-origin',
   }).then(async data => {
 
-<<<<<<< HEAD
-app.get('/getPy', (req, res) => {
-  console.log("SErver work")
-  let exec = require('child_process').exec;
-  exec("python py/test.py", function callback(error, stdout, stderr) {
-    console.log("Something happened");
-    console.log(stdout);
-    res.send(stdout);
-  })
-});
-=======
+
+    
+
     let result = await xml2json(data);
     console.log(JSON.stringify(result));
     let isFail = result["SearchResults:searchresults"].message[0].code[0];
@@ -125,6 +117,6 @@ async function xml2json(xml) {
     });
   });
 }
->>>>>>> b59bfce5d9ab817ecca2b77a2a57f4274e508ba4
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
