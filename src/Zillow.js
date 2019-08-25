@@ -115,6 +115,35 @@ export default class Zillow extends React.Component {
     this.setState({ cityStateZip: event.target.value })
   })
 
+  uploadCompleted = () => {
+    this.setState({ loading: false })
+  }
+
+  runApp = () => {
+    this.setState({ loading: true })
+    setTimeout(this.uploadCompleted, 3000, 'funky');
+  }
+
+  getDataUri(url, callback) {
+    var image = new Image();
+
+    image.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+      canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+      canvas.getContext('2d').drawImage(this, 0, 0);
+
+      // Get raw image data
+      callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+
+      // ... or get as Data URI
+      callback(canvas.toDataURL('image/png'));
+    };
+
+    image.src = url;
+  }
+
   imgSelected = (e) => {
 
     this.setState({ file: URL.createObjectURL(e.target.files[0]) });
@@ -161,7 +190,7 @@ export default class Zillow extends React.Component {
         </Row>
         <Row>
           <Col>
-            <Card style={{ height: 325 }}>
+            <Card style={{ minHeight: 325 }}>
 
               <Card.Body>
                 <Card.Title>Estimate Damage Cost of Affected Area</Card.Title>
@@ -169,6 +198,7 @@ export default class Zillow extends React.Component {
                   Choose an event from the dropdown below and import an image to get your estimate.
                 </Card.Text>
                 {this.renderDropdown()}
+<<<<<<< HEAD
                 <Card.Img variant="top" />
                 <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
                 <div className={"mt-2"}>
@@ -177,6 +207,19 @@ export default class Zillow extends React.Component {
                     <h3 style={{ position: 'absolute', right: 13 }}>{`$ ${this.state.largeScaleMoney} USD`}</h3>
                   </Row>
                 </div>
+=======
+                <Card.Img variant="top" src={this.state.file} />
+                <input type='file' className="mb-2 mt-2" onChange={(e) => this.imgSelected(e)} />
+                <Container>
+                  <Row>
+                    <Button className="centered" onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
+                  </Row>
+                  <Row className="mt-2">
+                    <Button className="disabled btn-light">{`$ ${this.state.largeScaleMoney} USD`}</Button>
+                    <Button className="disabled btn-light">{`${this.state.homesAffected} homes affected`}</Button>
+                  </Row>
+                </Container>
+>>>>>>> 14e9121b3f272792c9b2fa71e97a6c7dee44084a
                 {this.renderLoading()}
               </Card.Body>
             </Card>
@@ -199,7 +242,7 @@ export default class Zillow extends React.Component {
                 </Form>
                 <div>
                   <Row>
-                    <Col style={{ marginTop: 5 }} className="centered">
+                    <Col className="centered">
                       <Button onClick={this.getData}>Get Estimate</Button>
                     </Col>
                     <Col className="text-right">

@@ -29,6 +29,23 @@ app.get('/getPy', (req, res) => {
   })
 });
 
+app.post('/getByImg', (req, res) => {
+  var isWin = process.platform === "win32";
+  let py = isWin ? 'python' : 'python3';
+
+  let stuff = req.body.data; //array of house objects.
+
+  let img = req.body.img;
+
+  console.log(img);
+
+  // let exec = require('child_process').exec;
+  // exec(`${py} py/test.py`, function callback(error, stdout, stderr) {
+
+
+  //   res.send(stdout);
+  // })
+});
 
 app.get('/getPyData', (req, res) => {
   var isWin = process.platform === "win32";
