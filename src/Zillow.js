@@ -115,24 +115,26 @@ export default class Zillow extends React.Component {
           <h1 style={{ marginTop: 15, marginLeft: 18 }}>Assure AI</h1>
         </Row>
         <Row style={{ marginBottom: 5 }}>
-          <h5 style={{ marginTop: -5, marginLeft: 18 }}>Large-scale insurrance assurance.</h5>
+          <h5 style={{ marginTop: -5, marginLeft: 18 }}>Large-scale insurance assurance!</h5>
         </Row>
         <Row>
           <Col>
             <Card>
 
               <Card.Body>
-                <Card.Title>Estimate Cost of Large Affected Area</Card.Title>
+                <Card.Title>Estimate Cost of Affected Area</Card.Title>
                 <Card.Text>
-                  Estimate the cost of catestrophic damage affecting a large area.
+                   Choose an event from the dropdown below and import an image to get your estimate.
                 </Card.Text>
                 {this.renderDropdown()}
                 <Card.Img variant="top" src={this.state.file} />
-                <input type='file' onChange={(e) => this.imgSelected(e)} />
+                <input type='file' onChange={(e) => this.imgSelected(e)} style={{marginTop: -15, marginBottom: 15}} />
                 <div className={"mt-2"}>
-                  <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
-                  <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
-                  <h2>{`$ ${this.state.largeScaleMoney} USD`}</h2>
+                  <Row style={{marginLeft: 0}}>
+                    <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
+                    <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
+                    <h2 style={{position: 'absolute', right: 13}}>{`$ ${this.state.largeScaleMoney} USD`}</h2>
+                  </Row>
                 </div>
                 {this.renderLoading()}
               </Card.Body>
@@ -156,11 +158,11 @@ export default class Zillow extends React.Component {
                 </Form>
                 <div>
                   <Row>
-                    <Col>
+                    <Col style={{marginTop: 5}}>
                       <Button onClick={this.getData}>Get Estimate</Button>
                     </Col>
                     <Col>
-                      <h2>{`$ ${this.state.money} USD`}</h2>
+                      <h2 style={{position: 'absolute', right: 13}}>{`$ ${this.state.money} USD`}</h2>
                     </Col>
                   </Row>
                 </div>
