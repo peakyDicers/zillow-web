@@ -67,13 +67,14 @@ export default class Zillow extends React.Component {
   getTotalDamage = async () => {
     this.setState({ loading: true })
     const axios = require('axios');
-    let response = await axios.get('http://localhost:3000/getMorePyData')
+    let response = await axios.post('http://localhost:3000/getMorePyData', {data: this.state.file})
 
+    console.log('wtf', response.data)
     let houses = response.data.houses;
     let image = response.data.marked_image;
     houses = this.prepareHouses(houses);
 
-    this.setState({ locations: houses, homesAffected: houses.length > 0 ? houses.length - 1 : 0 });
+    this.setState({ locations: houses, homesAffected: houses.length});
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data: houses
     })
