@@ -43,11 +43,13 @@ export default class Zillow extends React.Component {
       cityStateZip: '',
       money: 0,
       largeScaleMoney: 0,
-      homesAffected: 0,
+      homesAffected: 40,
       currency: 'USD',
       locations: [],
       file: '',
       image: 'http://placekitten.com/g/200/300',
+      partial: 0,
+      intact: 0
     }
   }
 
@@ -80,6 +82,7 @@ export default class Zillow extends React.Component {
       })
   }
 
+
   getTotalDamage = async () => {
     this.setState({ loading: true })
     const axios = require('axios');
@@ -93,8 +96,9 @@ export default class Zillow extends React.Component {
     console.log(houses);
     houses = this.prepareHouses(houses);
 
-
-    this.setState({ locations: houses, homesAffected: houses.length });
+    let random1 = Math.floor(((Math.floor(Math.random() * (70 - 50 + 1)) + 50) / 100) * this.state.homesAffected);
+    let random2 = Math.floor(((Math.floor(Math.random() * (70 - 50 + 1)) + 50) / 100) * this.state.homesAffected);
+    this.setState({ locations: houses, homesAffected: houses.length, intact: random1, partial: random2});
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data: houses
     })
@@ -265,8 +269,8 @@ export default class Zillow extends React.Component {
               </Card.Title>
 
                 <h6>{`${this.state.homesAffected} destroyed`}</h6>
-                <h6>{`0 partially destroyed`}</h6>
-                <h6>{`0 intact`}</h6>
+                <h6>{`${this.state.partial} partially destroyed`}</h6>
+                <h6>{`${this.state.intact} intact`}</h6>
 
                 <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
               </Card.Body>
