@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
+
 export default class Zillow extends React.Component {
   constructor(props) {
     super(props)
@@ -44,47 +46,45 @@ export default class Zillow extends React.Component {
   render() {
     console.log(this.state)
     return (
-      <Container>
-        <h1 style={{marginTop: 15}}>INTACT INSURANCE</h1>
-
-
+      <Container className='mt-5'>
         <Row>
           <Col>
-            <DropdownComp />
+            <Container>
+              <h1 style={{ marginTop: 15 }}>INTACT INSURANCE</h1>
+              <DropdownComp />
+            </Container>
           </Col>
           <Col>
-            <Form>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Address</Form.Label>
-                <Form.Control onChange={this.addrChange.bind(this)} placeholder="742 Evergreen Terrace" />
-              </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput2">
-                <Form.Label>City, State and ZIP</Form.Label>
-                <Form.Control onChange={this.cityStateZipChange.bind(this)} placeholder="Springfield 0293A" />
-              </Form.Group>
-            </Form>
-
-            <Container>
-            <Row>
-              <Col>
-                <Button onClick={this.getData}>Get Estimate</Button>
-              </Col>
-              <Col>
-                <h2>{`$ ${this.state.money} USD`}</h2>
-              </Col>
-            </Row>
-            </Container>
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Find cost of a property
+              </Card.Title>
+                <Form>
+                  <Form.Group controlId="exampleForm.ControlInput1">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control onChange={this.addrChange.bind(this)} placeholder="742 Evergreen Terrace" />
+                  </Form.Group>
+                  <Form.Group controlId="exampleForm.ControlInput2">
+                    <Form.Label>City, State and ZIP</Form.Label>
+                    <Form.Control onChange={this.cityStateZipChange.bind(this)} placeholder="Springfield 0293A" />
+                  </Form.Group>
+                </Form>
+                <Container>
+                  <Row>
+                    <Col>
+                      <Button onClick={this.getData}>Get Estimate</Button>
+                    </Col>
+                    <Col>
+                      <h2>{`$ ${this.state.money} USD`}</h2>
+                    </Col>
+                  </Row>
+                </Container>
+              </Card.Body>
+            </Card>
 
           </Col>
         </Row>
-
-
-
-
-
-
-
-
       </Container>
     )
   }
