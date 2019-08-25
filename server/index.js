@@ -107,7 +107,7 @@ app.get('/getZillow', (req, res) => {
 
     
 
-    let result = await xml2json(data);
+    let result = await xml2json(data.data);
     console.log(JSON.stringify(result));
     let isFail = result["SearchResults:searchresults"].message[0].code[0];
     if (isFail !== "0") {
@@ -121,6 +121,7 @@ app.get('/getZillow', (req, res) => {
 })
 
 async function xml2json(xml) {
+  console.log(xml)
   return new Promise((resolve, reject) => {
     parseString(xml, function (err, json) {
       if (err)

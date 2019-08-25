@@ -16,8 +16,8 @@ export default class Vision extends React.Component {
         console.log(this.state)
         return (
             <Container>
-                <Button onClick={this.getPy}>Disp image</Button>
-                <div dangerouslySetInnerHTML={{ __html: this.state.image }}></div>
+                {/* <Button onClick={this.getPy}>Disp image</Button>
+                <div dangerouslySetInnerHTML={{ __html: this.state.image }}></div> */}
             </Container>
         )
     }
