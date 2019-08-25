@@ -32,19 +32,14 @@ app.get('/getPy', (req, res) => {
 app.post('/getMorePyData', (req, res) => {
   var isWin = process.platform === "win32";
   let py = isWin ? 'python' : 'python3';
+  
+  let damn_data = req.body.data;
 
-  let stuff = req.body.data; //array of house objects.
-
-  let img = req.body.img;
-
-  console.log(img);
-
-  // let exec = require('child_process').exec;
-  // exec(`${py} py/test.py`, function callback(error, stdout, stderr) {
-
-
-  //   res.send(stdout);
-  // })
+  let exec = require('child_process').exec;
+  exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_more_data.py '${damn_data}'`, function callback(error, stdout, stderr) {
+    console.log('HOLY', stdout)
+    res.send(stdout);
+  })
 });
 
 app.get('/getPyData', (req, res) => {
@@ -58,19 +53,12 @@ app.get('/getPyData', (req, res) => {
 });
 
 app.post('/getImgData', (req, res) => {
-  var isWin = process.platform === "win32";
-  let py = isWin ? 'python' : 'python3';
 
-  let damn_data = req.body.data; //array of house objects.
-
-  let exec = require('child_process').exec;
-  exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_more_data.py '${damn_data.str}'`, function callback(error, stdout, stderr) {
-    res.send(stdout);
-  })
 });
 
 app.post('/getTotalDamage', async (req, res) => {
   
+
   let houses = req.body.data; //array of house objects.
   
   let totalCost = 0;

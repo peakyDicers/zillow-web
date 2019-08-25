@@ -54,9 +54,8 @@ def ret_no_masks():
 def ret_me2(wut: str):
 	# Compute Bounding box
 	
-	if('20' in wut):
-		image_id = 0
-	elif('22' in wut):
+	image_id = 0
+	if('22' in wut):
 		image_id = 1
 	elif('23' in wut):
 		image_id = 2
@@ -71,4 +70,4 @@ def ret_me2(wut: str):
 	bbox = utils.extract_bboxes(mask)
 	bbox_dict = utils.extract_bboxes_info(wut, mask)
 	visualize.display_instances(image, bbox, mask, class_ids, dataset.class_names)
-	return  bbox_dict,
+	return  bbox_dict
