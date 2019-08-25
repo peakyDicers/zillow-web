@@ -5,7 +5,6 @@ import Container from 'react-bootstrap/Container';
 export default class Vision extends React.Component {
     constructor(props) {
         super(props)
-        console.log("assad")
         this.state = {
             money: 0,
             currency: 'USD'

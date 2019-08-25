@@ -38,28 +38,39 @@ export default class Zillow extends React.Component {
 
   getTotalDamage = async () => {
     const axios = require('axios');
-    let houses = await axios.get('http://localhost:3000/getPy')
-
+    let response = await axios.get('http://localhost:3000/getPyData')
+    
+    let houses = response.data;
+    houses = this.prepareHouses(houses);
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data: houses
-      // data:[
-      //   {
-      //     addr: '2114+Bigelow+Ave',
-      //     cityStateZip:'Seattle%2C+WA'
-      //   },
-      //   {
-      //     addr: '2114+Bigelow+Ave',
-      //     cityStateZip:'Seattle%2C+WA'
-      //   }
-      // ]
     })
       .then((response) => {
-        console.log(response);
         this.setState({ largeScaleMoney: response.data })
       })
       .catch(function (error) {
         console.log(error);
       })
+  }
+
+  prepareHouses = (data) => {
+    let result = [];
+    
+    for (let i = 0;i < data.length; i++){
+      let house = data[i];
+      let newHouse = {};
+      newHouse.lat = house.lat;
+      newHouse.lng = house.lng;
+      for (let j = 0; j < house.address.length; j++){
+        if (house.address[j] === ','){
+          newHouse.addr = house.address.slice(0, j);
+          newHouse.cityStateZip = house.address.slice(j+2, house.address.length);
+          break;
+        }
+      }
+      result.push(newHouse);
+    }
+    return result;
   }
 
   addrChange = (event) => {
@@ -86,7 +97,12 @@ export default class Zillow extends React.Component {
 
   renderLoading = () => {
     if (this.state.loading)
-      return <Spinner animation="border" />
+      return <div>
+        <Row>
+          <Spinner animation="border" />
+          <p className={"ml-3"}>Robots at work!</p>
+        </Row>
+      </div>
     else
       return <div />
   }

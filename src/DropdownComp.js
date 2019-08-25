@@ -2,7 +2,7 @@ import React from 'react';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export default class DropdownComp extends React.Component{
+export default class DropdownComp extends React.Component {
   constructor(props) {
     super(props)
   }
