@@ -152,10 +152,8 @@ export default class Zillow extends React.Component {
   renderLoading = () => {
     if (this.state.loading)
       return <div>
-        <Row>
-          <Spinner animation="border" />
-          <p className={"ml-3"}>Robots at work!</p>
-        </Row>
+
+        <span className={"ml-3"}><Spinner animation="border" className={"mr-2"}/> Robots at work!</span>
       </div>
     else
       return <div />
