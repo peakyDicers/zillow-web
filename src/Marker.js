@@ -6,7 +6,7 @@ export default class GMap extends React.Component {
     render() {
 
         return (
-            <Home />
+            <Home style={{ color: 'blue' }} />
         );
     }
 

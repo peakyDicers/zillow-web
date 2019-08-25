@@ -39,7 +39,7 @@ export default class Zillow extends React.Component {
   getTotalDamage = async () => {
     const axios = require('axios');
     let response = await axios.get('http://localhost:3000/getPyData')
-    
+
     let houses = response.data;
     houses = this.prepareHouses(houses);
     axios.post(`http://localhost:3000/getTotalDamage`, {
@@ -55,16 +55,16 @@ export default class Zillow extends React.Component {
 
   prepareHouses = (data) => {
     let result = [];
-    
-    for (let i = 0;i < data.length; i++){
+
+    for (let i = 0; i < data.length; i++) {
       let house = data[i];
       let newHouse = {};
       newHouse.lat = house.lat;
       newHouse.lng = house.lng;
-      for (let j = 0; j < house.address.length; j++){
-        if (house.address[j] === ','){
+      for (let j = 0; j < house.address.length; j++) {
+        if (house.address[j] === ',') {
           newHouse.addr = house.address.slice(0, j);
-          newHouse.cityStateZip = house.address.slice(j+2, house.address.length);
+          newHouse.cityStateZip = house.address.slice(j + 2, house.address.length);
           break;
         }
       }
@@ -127,11 +127,12 @@ export default class Zillow extends React.Component {
   render() {
     return (
       <Container className='mt-3'>
-        <Row>
-          <h1 style={{ marginTop: 15, marginLeft: 18 }}>Assure AI</h1>
+        <Row className="m-3">
+          <img height="60px" src="./media/logo-aai.png"></img>
+          <h1 className="ml-3">Assure AI</h1>
         </Row>
-        <Row style={{ marginBottom: 5 }}>
-          <h5 style={{ marginTop: -5, marginLeft: 18 }}>Large-scale insurance assurance!</h5>
+        <Row className="m-3"> 
+          <h5>Large-scale insurance assurance!</h5>
         </Row>
         <Row>
           <Col>
@@ -140,16 +141,23 @@ export default class Zillow extends React.Component {
               <Card.Body>
                 <Card.Title>Estimate Damage Cost of Affected Area</Card.Title>
                 <Card.Text>
-                   Choose an event from the dropdown below and import an image to get your estimate.
+                  Choose an event from the dropdown below and import an image to get your estimate.
                 </Card.Text>
                 {this.renderDropdown()}
                 <Card.Img variant="top" src={this.state.file} />
-                <input type='file' onChange={(e) => this.imgSelected(e)} style={{marginTop: -15, marginBottom: 15}} />
+                <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
                 <div className={"mt-2"}>
-                  <Row style={{marginLeft: 0}}>
-                    <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
-                    <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
-                    <h2 style={{position: 'absolute', right: 13}}>{`$ ${this.state.largeScaleMoney} USD`}</h2>
+                  <Row style={{ marginLeft: 0 }}>
+                    <Col className="centered">
+                      <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
+                    </Col>
+                    <Col className="centered">
+                      <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
+
+                    </Col>
+                    <Col className="text-right">
+                      <Button className="disabled btn-light">{`$ ${this.state.largeScaleMoney} USD`}</Button>
+                    </Col>
                   </Row>
                 </div>
                 {this.renderLoading()}
@@ -174,11 +182,11 @@ export default class Zillow extends React.Component {
                 </Form>
                 <div>
                   <Row>
-                    <Col style={{marginTop: 5}}>
+                    <Col style={{ marginTop: 5 }} className="centered">
                       <Button onClick={this.getData}>Get Estimate</Button>
                     </Col>
-                    <Col>
-                      <h2 style={{position: 'absolute', right: 13}}>{`$ ${this.state.money} USD`}</h2>
+                    <Col className="text-right">
+                      <Button className="disabled btn-light">{`$ ${this.state.money} USD`}</Button>
                     </Col>
                   </Row>
                 </div>
