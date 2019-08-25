@@ -45,7 +45,8 @@ export default class Zillow extends React.Component {
       largeScaleMoney: 0,
       homesAffected: 0,
       currency: 'USD',
-      locations: []
+      locations: [],
+      file:'',
     }
   }
 
@@ -168,7 +169,7 @@ export default class Zillow extends React.Component {
                   Choose an event from the dropdown below and import an image to get your estimate.
                 </Card.Text>
                 {this.renderDropdown()}
-                <Card.Img variant="top" src={this.state.file} />
+                <Card.Img variant="top" />
                 <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
                 <div className={"mt-2"}>
                   <Row style={{ marginLeft: 0 }}>
@@ -213,6 +214,7 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Image src={this.state.file} style={{width:450}}/>
         <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
       </Container>
     )
