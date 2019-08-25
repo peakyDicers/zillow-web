@@ -279,7 +279,7 @@ export default class Zillow extends React.Component {
                 <Card.Title>
                   ML Mapping
               </Card.Title>
-                <img src={this.state.image} onClick = {this.getImage()} style={{ width: '100%' }} />
+                <img src={this.state.image} style={{ width: '100%' }} />
               </Card.Body>
             </Card>
 
