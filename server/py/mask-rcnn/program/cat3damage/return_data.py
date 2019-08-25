@@ -48,7 +48,4 @@ def ret_me():
 	# Compute Bounding box
 	bbox = utils.extract_bboxes(mask)
 	bbox_dict = utils.extract_bboxes_info(mask)
-	print(bbox_dict)
-
-
-ret_me()
+	return bbox_dict

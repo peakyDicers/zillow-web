@@ -115,7 +115,7 @@ def extract_bboxes_info(mask):
         
         
         loc = geocoder.get((lat,lon))
-        dict.append({'Latitude: ':lat,'Longitude: ':lon,'Location: ':loc})   
+        dict.append({'lat':lat,'lng':lon,'address':loc[0].formatted_address})   
         
     return dict
 
