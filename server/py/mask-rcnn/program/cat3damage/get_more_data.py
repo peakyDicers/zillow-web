@@ -23,8 +23,3 @@ sys.stdout = save_stdout
 # print("Something should have printed by now...")
 
 print(json.dumps(dictr))
-
-
-
-
-

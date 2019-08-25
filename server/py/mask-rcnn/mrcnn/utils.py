@@ -82,7 +82,9 @@ def extract_bboxes_loc(mask):
         boxes_loc[i] = np.array([int((y1+y2)/2),int((x1+x2)/2)])
     return boxes_loc.astype(np.int32)
 
-def extract_bboxes_info(mask):
+def extract_bboxes_info(im_name, mask):
+    c1 = 35.324992
+    c2 = 97.522051
     """Compute centers of bounding boxes from masks.
     mask: [height, width, num_instances]. Mask pixels are either 1 or 0.
 
@@ -110,10 +112,21 @@ def extract_bboxes_info(mask):
         boxes[i] = np.array([y1, x1, y2, x2])
         boxes_loc[i] = np.array([int((y1+y2)/2),int((x1+x2)/2)])
         
-        lat = -0.007418/2736 * float(x1+x2) / 2.0 + 35.324992
-        lon = 0.003970/1824 * float(y1+y2) / 2.0 - 97.522051
-        
-        
+        if ('22' in im_name):
+            c1 = 35.322219
+            c2 = -97.522901
+        elif ('23' in im_name):
+            c1 = 35.326396
+            c2 = -97.517309
+        elif ('24' in im_name):
+            c1 = 35.323625
+            c2 = -97.517320
+        elif ('26' in im_name):
+            c1 = 35.325000
+            c2 = -97.513532
+            
+        lat = -0.007418/2736 * float(x1+x2) / 2.0 + c1
+        lon = 0.003970/1824 * float(y1+y2) / 2.0 + c2
         loc = geocoder.get((lat,lon))
         dict.append({'lat':lat,'lng':lon,'address':loc[0].formatted_address})   
         
