@@ -16,16 +16,17 @@ from matplotlib.patches import Polygon
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
+sys.path.insert(1, "../../")
+
 
 # Import Mask RCNN
-sys.path.append(ROOT_DIR)  # To find local version of the library
+# sys.path.append(ROOT_DIR)  # To find local version of the library
 from mrcnn import utils
 
 from mrcnn.model import log
 from googlegeocoder import GoogleGeocoder
 from program.cat3damage import cat3damage
 
-%matplotlib inline 
 config = cat3damage.Cat3damageConfig()
 CAT3DAMAGE_DIR = os.path.join(ROOT_DIR, "datasets/cat3damage")
 # Load dataset
@@ -48,3 +49,6 @@ def ret_me():
 	bbox = utils.extract_bboxes(mask)
 	bbox_dict = utils.extract_bboxes_info(mask)
 	print(bbox_dict)
+
+
+ret_me()
