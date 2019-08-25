@@ -37,7 +37,7 @@ app.post('/getMorePyData', (req, res) => {
 
   let exec = require('child_process').exec;
   exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_more_data.py '${damn_data}'`, function callback(error, stdout, stderr) {
-    console.log('HOLY', stdout)
+    
     res.send(stdout);
   })
 });

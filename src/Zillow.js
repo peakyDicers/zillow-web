@@ -69,8 +69,8 @@ export default class Zillow extends React.Component {
     const axios = require('axios');
     let response = await axios.post('http://localhost:3000/getMorePyData', {data: this.state.file})
 
-    console.log('wtf', response.data)
-    let houses = response.data.houses;
+    
+    let houses = response.data
     let image = response.data.marked_image;
     houses = this.prepareHouses(houses);
 
@@ -147,7 +147,7 @@ export default class Zillow extends React.Component {
   }
 
   imgSelected = (e) => {
-    console.log('THIS FILE IS ', e.target.files[0].name)
+    
     this.setState({ file: e.target.files[0].name });
   }
 
