@@ -54,9 +54,8 @@ def ret_no_masks():
 def ret_me2(wut: str):
 	# Compute Bounding box
 	
-	if('20' in wut):
-		image_id = 0
-	elif('22' in wut):
+	image_id = 0
+	if('22' in wut):
 		image_id = 1
 	elif('23' in wut):
 		image_id = 2
