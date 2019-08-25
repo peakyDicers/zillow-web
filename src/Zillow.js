@@ -152,10 +152,8 @@ export default class Zillow extends React.Component {
   renderLoading = () => {
     if (this.state.loading)
       return <div>
-        <Row>
-          <Spinner animation="border" />
-          <p className={"ml-3"}>Robots at work!</p>
-        </Row>
+
+        <span className={"ml-3"}><Spinner animation="border" className={"mr-2"}/> Robots at work!</span>
       </div>
     else
       return <div />
@@ -238,7 +236,14 @@ export default class Zillow extends React.Component {
         </Row>
         <Row style={{ marginTop: 30 }}>
           <Col>
-
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  ML Mapping
+              </Card.Title>
+                <Image src={this.state.file} style={{ width: 450 }} />
+              </Card.Body>
+            </Card>
           </Col>
           <Col>
             <Card>
@@ -255,7 +260,6 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Image src={this.state.file} style={{ width: 450 }} />
       </Container>
     )
   }

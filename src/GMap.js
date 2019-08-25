@@ -16,8 +16,8 @@ class Location {
 
 export default class GMap extends React.Component {
     static defaultProps = {
-        center: { lat: 43.6596, lng: -79.3977 },
-        zoom: 15,
+        //center: { lat: 43.6596, lng: -79.3977 },
+        //zoom: 15,
         visibleRowFirst: -1,
         visibleRowLast: -1,
         hoveredRowIndex: -1
