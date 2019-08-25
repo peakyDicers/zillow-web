@@ -238,7 +238,14 @@ export default class Zillow extends React.Component {
         </Row>
         <Row style={{ marginTop: 30 }}>
           <Col>
-
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  ML Mapping
+              </Card.Title>
+                <Image src={this.state.file} style={{ width: 450 }} />
+              </Card.Body>
+            </Card>
           </Col>
           <Col>
             <Card>
@@ -255,7 +262,6 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Image src={this.state.file} style={{ width: 450 }} />
       </Container>
     )
   }
