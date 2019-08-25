@@ -198,23 +198,20 @@ export default class Zillow extends React.Component {
                   Choose an event from the dropdown below and import an image to get your estimate.
                 </Card.Text>
                 {this.renderDropdown()}
-                <Card.Img variant="top" src={this.state.file} />
-                <input type='file' className="mb-2 mt-2" onChange={(e) => this.imgSelected(e)} />
-                <Container>
-                  <Row>
-                    <Button className="centered" onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
-                  </Row>
-                  <Row className="mt-2">
-                    <Button className="disabled btn-light">{`$ ${this.state.largeScaleMoney} USD`}</Button>
-                    <Button className="disabled btn-light">{`${this.state.homesAffected} homes affected`}</Button>
-                  </Row>
-                </Container>
+                <Card.Img variant="top" />
+                <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
+                <div className={"mt-2"}>
+                  <Button onClick={this.getTotalDamage} className="float-left">Estimate</Button>
+
+
+                  <Button className="disabled btn-light float-right">{`$ ${this.state.largeScaleMoney} USD`}</Button>
+                </div>
                 {this.renderLoading()}
               </Card.Body>
             </Card>
           </Col>
           <Col>
-            <Card style={{ height: 325 }}>
+            <Card style={{ minHeight: 325 }}>
               <Card.Body>
                 <Card.Title>
                   Estimate cost of single property.
@@ -230,21 +227,35 @@ export default class Zillow extends React.Component {
                   </Form.Group>
                 </Form>
                 <div>
-                  <Row>
-                    <Col className="centered">
-                      <Button onClick={this.getData}>Get Estimate</Button>
-                    </Col>
-                    <Col className="text-right">
-                      <Button className="disabled btn-light">{`$ ${this.state.money} USD`}</Button>
-                    </Col>
-                  </Row>
+
+                  <Button onClick={this.getData} className="float-left">Estimate</Button>
+                  <Button className="disabled btn-light float-right">{`$ ${this.state.money} USD`}</Button>
+
                 </div>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        <Row style={{ marginTop: 30 }}>
+          <Col>
+
+          </Col>
+          <Col>
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Affected Homes
+              </Card.Title>
+
+                <h6>{`${this.state.homesAffected} destroyed`}</h6>
+                <h6>{`0 partially destroyed`}</h6>
+
+                <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
         <Image src={this.state.file} style={{ width: 450 }} />
-        <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
       </Container>
     )
   }
