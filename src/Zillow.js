@@ -47,6 +47,7 @@ export default class Zillow extends React.Component {
       currency: 'USD',
       locations: [],
       file: '',
+      image: 'http://placekitten.com/g/200/300',
     }
   }
 
@@ -64,13 +65,28 @@ export default class Zillow extends React.Component {
       })
   }
 
+  getImage = () => {
+    const axios = require('axios');
+    axios.get(`http://localhost:3000/getImage`)
+      .then((response) => {
+        // handle success
+        console.log(response);
+        this.setState({ image: response.config.url })
+        console.log(this.state);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  }
+
   getTotalDamage = async () => {
     this.setState({ loading: true })
     const axios = require('axios');
-    let response = await axios.post('http://localhost:3000/getMorePyData', {data: this.state.file})
+    let response = await axios.post('http://localhost:3000/getMorePyData', { data: this.state.file })
 
-    
     // response = JSON.parse(response.data);
+    this.getImage();
 
     let houses = response.data.houses;
     // let image = response.marked_image;
@@ -78,7 +94,7 @@ export default class Zillow extends React.Component {
     houses = this.prepareHouses(houses);
 
 
-    this.setState({ locations: houses, homesAffected: houses.length});
+    this.setState({ locations: houses, homesAffected: houses.length });
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data: houses
     })
@@ -151,7 +167,7 @@ export default class Zillow extends React.Component {
   }
 
   imgSelected = (e) => {
-    
+
     this.setState({ file: e.target.files[0].name });
   }
 
@@ -159,7 +175,7 @@ export default class Zillow extends React.Component {
     if (this.state.loading)
       return <div>
 
-        <span className={"ml-3"}><Spinner animation="border" className={"mr-2"}/> Robots at work!</span>
+        <span className={"ml-3"}><Spinner animation="border" className={"mr-2"} /> Robots at work!</span>
       </div>
     else
       return <div />
@@ -242,7 +258,7 @@ export default class Zillow extends React.Component {
         </Row>
         <Row style={{ marginTop: 30 }}>
           <Col>
-          <Card>
+            <Card>
               <Card.Body>
                 <Card.Title>
                   Affected Homes
@@ -258,15 +274,15 @@ export default class Zillow extends React.Component {
           </Col>
           <Col>
 
-          <Card>
+            <Card>
               <Card.Body>
                 <Card.Title>
                   ML Mapping
               </Card.Title>
-                <Image src={'http://localhost:3000/server/py/mask-rcnn/program/cat3damage/output.png'} style={{ width: 450 }} />
+                <img src={this.state.image} onClick = {this.getImage()} style={{ width: '100%' }} />
               </Card.Body>
             </Card>
-            
+
           </Col>
         </Row>
       </Container>
