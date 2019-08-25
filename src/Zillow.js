@@ -173,7 +173,7 @@ export default class Zillow extends React.Component {
                 <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
                 <div className={"mt-2"}>
                   <Row style={{ marginLeft: 0 }}>
-                    <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
+                    <Button onClick={this.getTotalDamage}>Estimate Total Damage Cost</Button>
                     <h3 style={{ position: 'absolute', right: 13 }}>{`$ ${this.state.largeScaleMoney} USD`}</h3>
                   </Row>
                   <Row>
