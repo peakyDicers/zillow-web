@@ -39,23 +39,23 @@ export default class GMap extends React.Component {
     //     openBallonIndex: PropTypes.number
     // }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        let locations = [];
-        locations.push(new Location(59.95, 30), new Location(59.95, 30.33), new Location(59.95, 31));
+        // let locations = [];
+        // locations.push(new Location(59.95, 30), new Location(59.95, 30.33), new Location(59.95, 31));
 
         this.state = {
             lat: 30.337844,
             lng: 30.337844,
             center: { lat: 59.95, lng: 30.33 },
-            zoom: 11,
-            locations: locations
+            zoom: 11
+            // locations: locations
         }
     }
 
     renderMarkers = () => {
-        return this.state.locations.map(location => {
+        return this.props.locations.map(location => {
             return(
                 <Marker
                     lat={location.lat}
@@ -67,7 +67,6 @@ export default class GMap extends React.Component {
     }
 
     render() {
-
         return (
             <Container style={{ height: '30vh', marginTop: 25 }}>
                 <GoogleMapReact

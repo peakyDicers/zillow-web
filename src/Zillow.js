@@ -9,6 +9,31 @@ import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown'
+import Gmap from './GMap'
+
+// MOCK DATA 
+
+// let houses = [ { lat: 35.32368381834795,
+//   lng: -97.52049913048246,
+//   addr: '14509 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32371635343567,
+//   lng: -97.52034241995615,
+//   addr: '14508 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32318630263158,
+//   lng: -97.52062101644738,
+//   addr: '14605 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32370821966374,
+//   lng: -97.52004205811404,
+//   addr: '14508 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' },
+// { lat: 35.32319308077486,
+//   lng: -97.52017917982457,
+//   addr: '14604 Sylena Way',
+//   cityStateZip: 'Oklahoma City, OK 73170, USA' }
+// ];
 
 export default class Zillow extends React.Component {
   constructor(props) {
@@ -18,7 +43,9 @@ export default class Zillow extends React.Component {
       cityStateZip: '',
       money: 0,
       largeScaleMoney: 0,
-      currency: 'USD'
+      homesAffected: 0,
+      currency: 'USD',
+      locations: []
     }
   }
 
@@ -28,7 +55,7 @@ export default class Zillow extends React.Component {
       .then((response) => {
         // handle success
         console.log(response);
-        this.setState({ money: response.data })
+        this.setState({ money: response.data });
       })
       .catch(function (error) {
         // handle error
@@ -37,11 +64,14 @@ export default class Zillow extends React.Component {
   }
 
   getTotalDamage = async () => {
+    this.setState({ loading: true })
     const axios = require('axios');
     let response = await axios.get('http://localhost:3000/getPyData')
 
     let houses = response.data;
     houses = this.prepareHouses(houses);
+
+    this.setState({ locations: houses, homesAffected: houses.length > 0 ? houses.length - 1 : 0 });
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data: houses
     })
@@ -51,6 +81,9 @@ export default class Zillow extends React.Component {
       .catch(function (error) {
         console.log(error);
       })
+      .finally(() => {
+        this.setState({ loading: false })
+      });
   }
 
   prepareHouses = (data) => {
@@ -91,24 +124,24 @@ export default class Zillow extends React.Component {
   }
 
   getDataUri(url, callback) {
-  var image = new Image();
+    var image = new Image();
 
-  image.onload = function () {
-    var canvas = document.createElement('canvas');
-    canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-    canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+    image.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+      canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
 
-    canvas.getContext('2d').drawImage(this, 0, 0);
+      canvas.getContext('2d').drawImage(this, 0, 0);
 
-    // Get raw image data
-    callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+      // Get raw image data
+      callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
 
-    // ... or get as Data URI
-    callback(canvas.toDataURL('image/png'));
-  };
+      // ... or get as Data URI
+      callback(canvas.toDataURL('image/png'));
+    };
 
-  image.src = url;
-}
+    image.src = url;
+  }
 
   imgSelected = (e) => {
 
@@ -151,12 +184,12 @@ export default class Zillow extends React.Component {
           <img height="60px" src="./media/logo-aai.png"></img>
           <h1 className="ml-3">Assure AI</h1>
         </Row>
-        <Row className="m-3"> 
+        <Row className="m-3">
           <h5>Large-scale insurance assurance!</h5>
         </Row>
         <Row>
           <Col>
-            <Card>
+            <Card style={{ minHeight: 325 }}>
 
               <Card.Body>
                 <Card.Title>Estimate Damage Cost of Affected Area</Card.Title>
@@ -165,27 +198,22 @@ export default class Zillow extends React.Component {
                 </Card.Text>
                 {this.renderDropdown()}
                 <Card.Img variant="top" src={this.state.file} />
-                <input type='file' onChange={(e) => this.imgSelected(e)} style={{ marginTop: -15, marginBottom: 15 }} />
-                <div className={"mt-2"}>
-                  <Row style={{ marginLeft: 0 }}>
-                    <Col className="centered">
-                      <Button onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
-                    </Col>
-                    <Col className="centered">
-                      <Button onClick={this.runApp} className={"ml-3"}>GO</Button>
-
-                    </Col>
-                    <Col className="text-right">
-                      <Button className="disabled btn-light">{`$ ${this.state.largeScaleMoney} USD`}</Button>
-                    </Col>
+                <input type='file' className="mb-2" onChange={(e) => this.imgSelected(e)} />
+                <Container>
+                  <Row>
+                    <Button className="centered" onClick={this.getTotalDamage}>Get Total Damage Cost</Button>
                   </Row>
-                </div>
+                  <Row className="mt-2">
+                    <Button className="disabled btn-light">{`$ ${this.state.largeScaleMoney} USD`}</Button>
+                    <Button className="disabled btn-light">{`${this.state.homesAffected} homes affected`}</Button>
+                  </Row>
+                </Container>
                 {this.renderLoading()}
               </Card.Body>
             </Card>
           </Col>
           <Col>
-            <Card>
+            <Card style={{ height: 325 }}>
               <Card.Body>
                 <Card.Title>
                   Estimate cost of single property.
@@ -202,7 +230,7 @@ export default class Zillow extends React.Component {
                 </Form>
                 <div>
                   <Row>
-                    <Col style={{ marginTop: 5 }} className="centered">
+                    <Col className="centered">
                       <Button onClick={this.getData}>Get Estimate</Button>
                     </Col>
                     <Col className="text-right">
@@ -214,6 +242,7 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
       </Container>
     )
   }

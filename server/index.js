@@ -60,7 +60,7 @@ app.get('/getPyData', (req, res) => {
 app.post('/getTotalDamage', async (req, res) => {
   
   let houses = req.body.data; //array of house objects.
-
+  
   let totalCost = 0;
   let housesCounted = 0;
   let houseVals = []
@@ -69,6 +69,7 @@ app.post('/getTotalDamage', async (req, res) => {
     houseVals.push(getHouseValue(house.addr, house.cityStateZip)) //TODO: make sure these parameters are correct.
   });
 
+  
   houseVals = await Promise.all(houseVals);
 
   houseVals.forEach(houseVal => {
@@ -83,7 +84,7 @@ app.post('/getTotalDamage', async (req, res) => {
   //calculate avg cost of a house, and use these vals for houses we couldn't query.
   let avgHouseCost = totalCost / housesCounted;
   totalCost += avgHouseCost * (houses.length - housesCounted)
-
+  totalCost = parseInt(totalCost);
   res.send(totalCost.toString());
 });
 
