@@ -34,14 +34,7 @@ export default class Zillow extends React.Component {
 
   getTotalDamage = () => {
     const axios = require('axios');
-    // axios({
-    //   method: 'post',
-    //   url: 'http://localhost:3000/getTotalDamage',
-    //   data: {
-    //     firstName: 'Fred',
-    //     lastName: 'Flintstone'
-    //   }
-    // });
+    
     axios.post(`http://localhost:3000/getTotalDamage`, {
       data:[
         {
@@ -109,7 +102,7 @@ export default class Zillow extends React.Component {
                 </Container>
               </Card.Body>
             </Card>
-
+            <Button onClick={this.getTotalDamage}>Get Total Damages Cost</Button>
           </Col>
         </Row>
       </Container>
