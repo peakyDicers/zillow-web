@@ -68,7 +68,7 @@ export default class GMap extends React.Component {
 
     render() {
         return (
-            <Container style={{ height: '50vh', marginTop: 25 }}>
+            <Container style={{ height: '50vh',paddingBottom: 20, marginTop: 25 }}>
                 <GoogleMapReact
                     defaultCenter={this.props.center}
                     defaultZoom={this.props.zoom}
