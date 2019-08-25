@@ -29,7 +29,7 @@ app.get('/getPy', (req, res) => {
   })
 });
 
-app.post('/getByImg', (req, res) => {
+app.post('/getMorePyData', (req, res) => {
   var isWin = process.platform === "win32";
   let py = isWin ? 'python' : 'python3';
 
@@ -53,6 +53,18 @@ app.get('/getPyData', (req, res) => {
 
   let exec = require('child_process').exec;
   exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_data.py`, function callback(error, stdout, stderr) {
+    res.send(stdout);
+  })
+});
+
+app.post('/getImgData', (req, res) => {
+  var isWin = process.platform === "win32";
+  let py = isWin ? 'python' : 'python3';
+
+  let damn_data = req.body.data; //array of house objects.
+
+  let exec = require('child_process').exec;
+  exec(`cd py/mask-rcnn/program/cat3damage/ && ${py} get_more_data.py '${damn_data.str}'`, function callback(error, stdout, stderr) {
     res.send(stdout);
   })
 });

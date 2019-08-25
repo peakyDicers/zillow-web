@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.lines as lines
 from matplotlib.patches import Polygon
+from PIL import Image, ImageDraw
 
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
@@ -49,3 +50,12 @@ def ret_me():
 	bbox = utils.extract_bboxes(mask)
 	bbox_dict = utils.extract_bboxes_info(mask)
 	return bbox_dict
+
+def ret_me2(wut: str):
+	# Compute Bounding box
+	bbox = utils.extract_bboxes(mask)
+	bbox_dict = utils.extract_bboxes_info(mask)
+	return { 
+		"houses" :bbox_dict,
+		"marked_image": Image.new('RGBA', (200, 100),  color='red')
+	}

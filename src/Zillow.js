@@ -46,7 +46,7 @@ export default class Zillow extends React.Component {
       homesAffected: 0,
       currency: 'USD',
       locations: [],
-      file:'',
+      file: '',
     }
   }
 
@@ -67,9 +67,10 @@ export default class Zillow extends React.Component {
   getTotalDamage = async () => {
     this.setState({ loading: true })
     const axios = require('axios');
-    let response = await axios.get('http://localhost:3000/getPyData')
+    let response = await axios.get('http://localhost:3000/getMorePyData')
 
-    let houses = response.data;
+    let houses = response.data.houses;
+    let image = response.data.marked_image;
     houses = this.prepareHouses(houses);
 
     this.setState({ locations: houses, homesAffected: houses.length > 0 ? houses.length - 1 : 0 });
@@ -145,7 +146,6 @@ export default class Zillow extends React.Component {
   }
 
   imgSelected = (e) => {
-
     this.setState({ file: URL.createObjectURL(e.target.files[0]) });
   }
 
@@ -243,7 +243,7 @@ export default class Zillow extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Image src={this.state.file} style={{width:450}}/>
+        <Image src={this.state.file} style={{ width: 450 }} />
         <Gmap locations={this.state.locations} zoom={15} center={this.state.locations.length > 0 ? this.state.locations[0] : { lat: 43.6596, lng: -79.3977 }} />
       </Container>
     )
